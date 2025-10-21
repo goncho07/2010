@@ -68,12 +68,13 @@ const MatriculaTable: React.FC<{
   return (
     <div className="flex-grow flex flex-col min-h-0 bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200/80 dark:border-slate-700/80 overflow-hidden">
       <div className="flex-grow overflow-y-auto">
-        <table className="w-full text-base table-fixed">
-          <thead className="sticky top-0 bg-slate-50/80 dark:bg-slate-800/80 backdrop-blur-sm z-10">
-            <tr className="border-b-2 border-slate-200 dark:border-slate-700">
-              <TableHeader columnKey="fullName" label="Estudiante" sortConfig={sortConfig} onSort={onSort} />
-              <TableHeader columnKey="grade" label="Grado/Sección" sortConfig={sortConfig} onSort={onSort} />
-              <th className="p-3 text-left font-semibold text-sm text-slate-600 dark:text-slate-300">Estado</th>
+        <div className="w-full overflow-x-auto">
+          <table className="min-w-full text-base">
+            <thead className="sticky top-0 bg-slate-50/80 dark:bg-slate-800/80 backdrop-blur-sm z-10">
+              <tr className="border-b-2 border-slate-200 dark:border-slate-700">
+                <TableHeader columnKey="fullName" label="Estudiante" sortConfig={sortConfig} onSort={onSort} />
+                <TableHeader columnKey="grade" label="Grado/Sección" sortConfig={sortConfig} onSort={onSort} />
+                <th className="p-3 text-left font-semibold text-sm text-slate-600 dark:text-slate-300">Estado</th>
               <th className="p-3 w-20 text-center font-semibold text-sm text-slate-600 dark:text-slate-300">Acciones</th>
             </tr>
           </thead>
@@ -133,7 +134,8 @@ const MatriculaTable: React.FC<{
               )
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
       <div className="p-4 border-t border-slate-100 dark:border-slate-700">
         <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={onPageChange} />

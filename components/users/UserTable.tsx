@@ -164,7 +164,8 @@ const UserTable: React.FC<UserTableProps> = ({
   return (
     <div className="flex-grow flex flex-col min-h-0 bg-[var(--color-surface)] rounded-[var(--radius-lg)] shadow-[var(--shadow-md)] border border-[var(--color-border)] overflow-hidden">
       <div className="flex-grow overflow-y-auto">
-        <table className="w-full table-fixed">
+        <div className="w-full overflow-x-auto">
+          <table className="min-w-full">
           <thead className="sticky top-0 z-20 bg-slate-50/80 dark:bg-slate-800/80 backdrop-blur-sm">
             <tr className="border-b-2 border-[var(--color-border)]">
               <TableHeader
@@ -194,7 +195,8 @@ const UserTable: React.FC<UserTableProps> = ({
               <EmptyState onClearFilters={onClearFilters} onCreateUser={onCreateUser} />
             )}
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
       {totalPages > 1 && (
         <div className="p-4 border-t border-[var(--color-border-light)]">

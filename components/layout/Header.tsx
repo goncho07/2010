@@ -13,6 +13,7 @@ import {
   Sun,
   Moon,
   Calendar,
+  Menu,
 } from 'lucide-react';
 import { useUIStore } from '@/store/uiStore';
 import { useAuthStore } from '@/store/authStore';
@@ -97,7 +98,7 @@ const NotificationsPanel: React.FC = () => {
 };
 
 const Header: React.FC = () => {
-  const { toggleSidebar, isSidebarCollapsed, theme, toggleTheme } = useUIStore();
+  const { toggleSidebar, toggleSidebarCollapse, isSidebarCollapsed, theme, toggleTheme } = useUIStore();
   const { logout, user } = useAuthStore();
   const isOnline = useOfflineStatus();
   const notifications = useNotificationStore((state) => state.notifications);
@@ -136,14 +137,21 @@ const Header: React.FC = () => {
   const roleDisplay = user?.role === 'director' ? 'Director(a)' : user?.role === 'teacher' ? 'Docente' : 'Usuario';
 
   return (
-    <header className="bg-[var(--color-surface)] sticky top-0 z-30 flex items-center justify-between h-20 px-4 sm:px-6 lg:px-8 border-b border-[var(--color-border)]">
-      <div className="flex items-center gap-4">
+    <header className="sticky top-0 z-30 flex items-center justify-between border-b border-[var(--color-border)] bg-[var(--color-surface)] px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
+      <div className="flex items-center gap-3 sm:gap-4">
         <IconButton
           onClick={toggleSidebar}
-          icon={isSidebarCollapsed ? ChevronsRight : ChevronsLeft}
-          aria-label="Toggle Sidebar"
+          icon={Menu}
+          aria-label="Abrir menú de navegación"
           variant="text"
-          className="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]"
+          className="md:hidden text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]"
+        />
+        <IconButton
+          onClick={toggleSidebarCollapse}
+          icon={isSidebarCollapsed ? ChevronsRight : ChevronsLeft}
+          aria-label="Contraer barra lateral"
+          variant="text"
+          className="hidden md:inline-flex text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]"
         />
         <div className="hidden lg:flex items-center gap-3">
           <Calendar size={24} className="text-[var(--color-primary-text)] shrink-0" />
@@ -155,7 +163,7 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         <IconButton
           onClick={toggleTheme}
           aria-label="Toggle theme"
