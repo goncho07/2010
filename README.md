@@ -2,65 +2,90 @@
 
 ## Descripción
 
-**SGE "chat pro bv"** es un sistema de gestión escolar moderno diseñado para colegios públicos en Lima, Perú, con un enfoque en la simplicidad, el diseño *mobile-first* y la digitalización de procesos clave. La plataforma está construida para atender las necesidades de directores, docentes, estudiantes y apoderados, unificando la información en un solo lugar.
+**SGE "chat pro bv"** es un sistema de gestión escolar moderno diseñado para colegios públicos en Lima, Perú. El frontend está construido con React, Vite y TypeScript, y se integra con Tailwind CSS a través del CDN oficial. La arquitectura está desacoplada para consumir un backend REST (por ejemplo, desplegado en Cloud Run) y está preparada para desplegarse fácilmente en Firebase Hosting.
 
-Este frontend está desarrollado con React, Vite, TypeScript y Tailwind CSS, y ha sido refactorizado para funcionar de manera desacoplada, listo para consumir una API RESTful externa (por ejemplo, construida en Cloud Run).
+## Requisitos previos
 
-## Requisitos Previos
+Antes de comenzar asegúrate de tener instalado:
 
-Para ejecutar este proyecto, necesitarás tener instalado lo siguiente en tu máquina local:
+- [Node.js](https://nodejs.org/) 18 o superior (incluye `npm`).
+- [Firebase CLI](https://firebase.google.com/docs/cli) (`npm install -g firebase-tools`) para desplegar en Firebase Hosting.
 
--   [Node.js](https://nodejs.org/) (versión 18.x o superior recomendada)
--   [npm](https://www.npmjs.com/) (generalmente viene con Node.js) o [yarn](https://yarnpkg.com/)
+## Configuración del proyecto
 
-## Instalación
+1. **Clona el repositorio**
+   ```bash
+   git clone <URL_DEL_REPOSITORIO>
+   cd <NOMBRE_DEL_PROYECTO>
+   ```
 
-Sigue estos pasos para configurar el proyecto en tu entorno de desarrollo:
+2. **Instala las dependencias**
+   ```bash
+   npm install
+   ```
 
-1.  **Clona el repositorio:**
-    ```bash
-    git clone <URL_DEL_REPOSITORIO>
-    cd <NOMBRE_DEL_PROYECTO>
-    ```
+3. **Configura las variables de entorno**
+   - Durante el desarrollo, crea un archivo `.env` en la raíz del proyecto con la URL de tu API:
+     ```env
+     VITE_API_BASE_URL=http://localhost:8080/api
+     ```
+   - Para producción, puedes sobrescribir los valores sin recompilar editando `public/env.js` antes de desplegar. Allí se define el objeto `window.__ENV__` que consume la aplicación en tiempo de ejecución.
 
-2.  **Instala las dependencias:**
-    Abre una terminal en la raíz del proyecto y ejecuta el siguiente comando para instalar todas las librerías necesarias.
-    ```bash
-    npm install
-    ```
+## Scripts disponibles
 
-## Ejecución en Desarrollo
+- `npm run dev`: inicia el servidor de desarrollo de Vite (por defecto en `http://localhost:5173`).
+- `npm run build`: genera la versión optimizada de producción en la carpeta `dist/`.
+- `npm run preview`: sirve localmente el build de producción para pruebas finales.
 
-Para iniciar la aplicación en modo de desarrollo con recarga en caliente:
+## Preparación para Firebase Hosting
 
-1.  **Crea el archivo de entorno:**
-    Crea un archivo llamado `.env` en la raíz del proyecto y añade la siguiente línea para configurar la URL de la API de desarrollo:
-    ```
-    VITE_API_BASE_URL=http://localhost:8080/api
-    ```
+1. **Inicia sesión en Firebase**
+   ```bash
+   firebase login
+   ```
 
-2.  **Inicia el servidor:**
-    Ejecuta el siguiente comando. Vite iniciará un servidor de desarrollo local.
-    ```bash
-    npm run dev
-    ```
+2. **Selecciona tu proyecto** (si no lo hiciste antes)
+   ```bash
+   firebase use <ID_DEL_PROYECTO>
+   ```
 
-3.  **Abre la aplicación:**
-    Abre tu navegador y ve a la dirección que aparece en la terminal (generalmente `http://localhost:5173`).
+3. **Compila la aplicación**
+   ```bash
+   npm run build
+   ```
 
-## Build para Producción
+4. **Despliega a Firebase Hosting**
+   ```bash
+   firebase deploy --only hosting
+   ```
 
-Para compilar y optimizar la aplicación para su despliegue en un entorno de producción como Firebase Hosting:
+La configuración por defecto (`firebase.json`) ya redirige todas las rutas a `index.html`, lo que permite utilizar `BrowserRouter` sin problemas.
 
-1.  **Ejecuta el comando de build:**
-    Este comando creará una carpeta `dist/` en la raíz del proyecto con todos los archivos estáticos optimizados.
-    ```bash
-    npm run build
-    ```
+## Notas sobre Tailwind CSS
 
-2.  **(Opcional) Previsualiza el build:**
-    Para probar la versión de producción localmente antes de desplegarla, ejecuta:
-    ```bash
-    npm run preview
-    ```
-    Luego, abre la URL que te proporcione la terminal.
+- Debido a restricciones del entorno, Tailwind CSS se carga mediante el CDN oficial (`https://cdn.tailwindcss.com`) en `index.html`.
+- Si prefieres compilar Tailwind de forma local, instala `tailwindcss`, `postcss` y `autoprefixer`, restaura las directivas `@tailwind` en `src/index.css` y ajusta `postcss.config.js`.
+
+## Soporte de Service Worker
+
+El archivo `public/service-worker.js` implementa un caché básico para permitir funcionamiento offline limitado. La inscripción del service worker sólo ocurre en modo producción (`npm run build`) para evitar interferencias durante el desarrollo.
+
+## Estructura relevante del proyecto
+
+```
+├── App.tsx
+├── index.html
+├── public/
+│   ├── assets/
+│   ├── env.js
+│   └── service-worker.js
+├── src/
+│   ├── main.tsx
+│   └── index.css
+├── components/
+├── pages/
+├── services/
+└── store/
+```
+
+Esta estructura permite extender módulos sin acoplarlos al punto de entrada y facilita la publicación en Firebase Hosting.

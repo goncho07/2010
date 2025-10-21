@@ -1,18 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HashRouter } from 'react-router-dom';
-import App from './App';
+import { BrowserRouter } from 'react-router-dom';
+import App from '../App';
 import './index.css';
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && import.meta.env.PROD) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
       .register('/service-worker.js')
-      .then((registration) => {
-        console.log('SW registered: ', registration);
-      })
       .catch((registrationError) => {
-        console.log('SW registration failed: ', registrationError);
+        console.error('Service worker registration failed:', registrationError);
       });
   });
 }
@@ -22,11 +19,10 @@ if (!rootElement) {
   throw new Error('Could not find root element to mount to');
 }
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
-  </React.StrictMode>
+    </BrowserRouter>
+  </React.StrictMode>,
 );
