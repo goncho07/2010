@@ -21,7 +21,7 @@ import Button from '@/ui/Button';
 import { isStudent, isStaff, getRoleDisplay, formatUserName } from '@/utils/helpers';
 import { toast } from 'react-hot-toast';
 import * as api from '@/services/api';
-import { format } from 'date-fns';
+import { format } from 'date-fns/format';
 
 const UserCarnet: React.FC<{ user: GenericUser; time: string }> = ({ user, time }) => {
   const name = isStudent(user) ? user.fullName : user.name;
