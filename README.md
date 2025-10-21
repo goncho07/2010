@@ -1,8 +1,4 @@
-# SGE "chat pro bv" - Sistema de Gestión Escolar Moderno
-
-## Descripción
-
-**SGE "chat pro bv"** es un sistema de gestión escolar moderno diseñado para colegios públicos en Lima, Perú. El frontend está construido con React, Vite y TypeScript, y se integra con Tailwind CSS a través del CDN oficial. La arquitectura está desacoplada para consumir un backend REST (por ejemplo, desplegado en Cloud Run) y está preparada para desplegarse fácilmente en Firebase Hosting.
+Peepos es un sistema de gestión escolar moderno diseñado para colegios públicos en Lima, Perú. El frontend está construido con React, Vite y TypeScript, y se integra con Tailwind CSS a través del CDN oficial. La arquitectura está desacoplada para consumir un backend REST (por ejemplo, desplegado en Cloud Run) y está preparada para desplegarse fácilmente en Firebase Hosting.
 
 ## Requisitos previos
 
